@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,26 +9,29 @@ int main() {
 
   size_t n = 0;
 
-  printf("Please enter some text: ");
-  ssize_t length = getline(&line, &n, stdin);
+  while (true) {
 
-  if (length < 0) {
-    perror("getline failed");
-    free(line);
-    exit(EXIT_FAILURE);
-  }
+    printf("Please enter some text: ");
+    ssize_t length = getline(&line, &n, stdin);
 
-  char *saveptr = NULL;
+    if (length < 0) {
+      perror("getline failed");
+      free(line);
+      exit(EXIT_FAILURE);
+    }
 
-  char *str = strtok_r(line, " ", &saveptr);
-  printf("\nTokens: \n");
-  printf("%s\n", str);
+    char *saveptr = NULL;
 
-  while ((str = strtok_r(NULL, " ", &saveptr))) {
+    char *str = strtok_r(line, " ", &saveptr);
+    printf("\nTokens: \n");
     printf("%s\n", str);
-  }
 
-  free(line);
+    while ((str = strtok_r(NULL, " ", &saveptr))) {
+      printf("%s\n", str);
+    }
+
+    free(line);
+  }
 
   return 0;
 }
